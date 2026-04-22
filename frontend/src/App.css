@@ -1,0 +1,734 @@
+/* ============================================
+   EXPENSE TRACKER — STYLES v2
+   Fixed dark mode, beautified UI, auth pages
+   ============================================ */
+
+/* --- Reset & Base --- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #f4f6fb;
+  --bg-alt: #eaecf3;
+  --surface: #ffffff;
+  --surface-hover: #f9fafb;
+  --text: #111827;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --border: #e5e7eb;
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --primary-light: rgba(99, 102, 241, 0.08);
+  --primary-glow: rgba(99, 102, 241, 0.2);
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --success: #10b981;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --transition: 0.2s ease;
+}
+
+/* --- Dark Mode — high contrast for readability --- */
+.dark {
+  --bg: #0c1222;
+  --bg-alt: #131b2e;
+  --surface: #1a2332;
+  --surface-hover: #1f2b3d;
+  --text: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border: #2d3a4d;
+  --primary: #818cf8;
+  --primary-hover: #6366f1;
+  --primary-light: rgba(129, 140, 248, 0.1);
+  --primary-glow: rgba(129, 140, 248, 0.25);
+  --danger: #f87171;
+  --danger-hover: #ef4444;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  transition: background var(--transition), color var(--transition);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- App Layout --- */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Header --- */
+.app-header {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: #ffffff;
+  padding: 0.85rem 2rem;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.dark .app-header {
+  background: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
+  box-shadow: 0 4px 15px rgba(67, 56, 202, 0.4);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.app-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.user-greeting {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  padding-right: 0.5rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.app-main {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* --- Dashboard Grid --- */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.dashboard-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: sticky;
+  top: 80px;
+}
+
+.dashboard-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* --- Card --- */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 1.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+/* --- Forms --- */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  background: var(--bg);
+  color: var(--text);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none;
+}
+
+.form-group input::placeholder {
+  color: var(--text-muted);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.input-error {
+  border-color: var(--danger) !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
+}
+
+.error-text {
+  display: block;
+  color: var(--danger);
+  font-size: 0.76rem;
+  margin-top: 0.3rem;
+  font-weight: 500;
+}
+
+/* --- Buttons --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  letter-spacing: 0.01em;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #ffffff;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: #ffffff;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--danger-hover);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--text);
+}
+
+.btn-outline:hover:not(:disabled) {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-logout {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-logout:hover {
+  background: rgba(239, 68, 68, 0.85);
+  border-color: transparent;
+}
+
+.btn-sm {
+  padding: 0.35rem 0.8rem;
+  font-size: 0.8rem;
+}
+
+/* --- Table --- */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: var(--radius-sm);
+}
+
+.expense-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.expense-table th,
+.expense-table td {
+  padding: 0.8rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+  color: var(--text);
+}
+
+.expense-table th {
+  font-weight: 700;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--bg);
+  position: sticky;
+  top: 0;
+}
+
+.expense-table tbody tr {
+  transition: background var(--transition);
+}
+
+.expense-table tbody tr:hover {
+  background: var(--primary-light);
+}
+
+.expense-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.amount-cell {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+/* --- Tags & Badges --- */
+.category-tag {
+  display: inline-block;
+  background: var(--primary-light);
+  color: var(--primary);
+  padding: 0.2rem 0.65rem;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.badge {
+  background: var(--bg);
+  color: var(--text-secondary);
+  padding: 0.15rem 0.5rem;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+/* --- Pagination --- */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.15rem;
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--border);
+}
+
+.page-info {
+  font-size: 0.83rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* --- Filter --- */
+.filter-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.filter-actions .btn {
+  flex: 1;
+}
+
+/* --- Summary --- */
+.summary-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.summary-item {
+  padding: 0.85rem;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition), transform var(--transition);
+  border: 1px solid transparent;
+}
+
+.summary-item:hover {
+  border-color: var(--primary-glow);
+  transform: translateX(4px);
+}
+
+.summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.35rem;
+}
+
+.summary-count {
+  font-size: 0.73rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.summary-amount {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin-bottom: 0.4rem;
+  color: var(--text);
+}
+
+.progress-bar {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 0.25rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), #8b5cf6);
+  border-radius: 3px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.summary-percent {
+  font-size: 0.73rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.grand-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.15rem;
+  padding-top: 1.15rem;
+  border-top: 2px solid var(--border);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+/* --- Charts --- */
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.chart-container {
+  min-height: 300px;
+}
+
+.chart-subtitle {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.6rem;
+  text-align: center;
+}
+
+/* --- States --- */
+.loading-spinner {
+  text-align: center;
+  padding: 2.5rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 2.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ============================================
+   AUTH PAGES — Login & Signup
+   ============================================ */
+
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: var(--bg);
+  /* subtle gradient behind the form */
+  background-image:
+    radial-gradient(ellipse at 20% 50%, var(--primary-glow) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 50%);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--border);
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-logo {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 1rem;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+}
+
+.auth-logo-icon {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.auth-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.35rem;
+}
+
+.auth-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-btn {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  font-size: 0.95rem;
+}
+
+/* input with icon on the left */
+.input-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon-wrapper input {
+  padding-left: 2.5rem;
+}
+
+.input-icon {
+  position: absolute;
+  left: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.85rem;
+  pointer-events: none;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0.65rem;
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+}
+
+.toggle-password:hover {
+  text-decoration: underline;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.auth-footer p {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.88rem;
+  text-decoration: none;
+}
+
+.link-btn:hover {
+  text-decoration: underline;
+}
+
+/* floating dark mode toggle on auth pages */
+.auth-dark-toggle-wrap {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 999;
+}
+
+.dark-toggle-floating {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+  box-shadow: var(--shadow-md);
+}
+
+.dark-toggle-floating:hover {
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-sidebar {
+    position: static;
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .app-header {
+    padding: 0.75rem 1rem;
+  }
+
+  .app-title {
+    font-size: 1.15rem;
+  }
+
+  .user-greeting {
+    display: none;
+  }
+
+  .app-main {
+    padding: 1rem 0.5rem;
+  }
+
+  .card {
+    padding: 1.15rem;
+    border-radius: 10px;
+  }
+
+  .expense-table th,
+  .expense-table td {
+    padding: 0.55rem 0.6rem;
+    font-size: 0.82rem;
+  }
+
+  .auth-card {
+    padding: 2rem 1.25rem;
+  }
+
+  .auth-title {
+    font-size: 1.3rem;
+  }
+}
